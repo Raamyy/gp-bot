@@ -2,6 +2,7 @@ const { Webhook } = require('discord-webhook-node');
 
 const webhook = "https://discord.com/api/webhooks/852680041062334525/2JZe8tBz6CLY9w0SMjfbwmqVElEcIxEZ3sRGNRz2Q2JP-q3xaqpYl9WkP22JE-HOyPgL"
 
+
 function sendMessage(msg, webhookURL) {
     const hook = new Webhook(webhookURL);
     hook.send(msg)
@@ -23,9 +24,11 @@ let members = [
         name: "hady",
         id: "385042714183467008"
     },
+    {
+        name: "molto",
+        id: "380431504544628736"
+    },
 ]
-
-sendMessage("Beep Boop!",webhook)
 
 let i = 0;
 function see7(){
