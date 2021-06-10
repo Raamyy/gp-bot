@@ -25,6 +25,8 @@ let members = [
     },
 ]
 
+sendMessage("Beep Boop!",webhook)
+
 let i = 0;
 function see7(){
     if (i == messages.length) i = 0;
@@ -35,6 +37,7 @@ function see7(){
     i++
 }
 
+see7();
 setInterval(() => {
     see7();
 }, 3600000); //hour
