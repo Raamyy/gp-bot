@@ -1,4 +1,5 @@
 const { Webhook } = require('discord-webhook-node');
+const schedule = require('node-schedule');
 
 const webhook = "https://discord.com/api/webhooks/852680041062334525/2JZe8tBz6CLY9w0SMjfbwmqVElEcIxEZ3sRGNRz2Q2JP-q3xaqpYl9WkP22JE-HOyPgL"
 
@@ -41,6 +42,7 @@ function see7(){
 }
 
 see7();
-setInterval(() => {
+
+const job = schedule.scheduleJob('0 * * * *', function(){
     see7();
-}, 3600000); //hour
+  });
