@@ -1,48 +1,45 @@
 const { Webhook } = require('discord-webhook-node');
 const schedule = require('node-schedule');
+require('dotenv').config()
 
-const webhook = "https://discord.com/api/webhooks/852680041062334525/2JZe8tBz6CLY9w0SMjfbwmqVElEcIxEZ3sRGNRz2Q2JP-q3xaqpYl9WkP22JE-HOyPgL"
+const webhook = process.env.WEBHOOK_URL;
 
+const messages = process.env.Messages.split(',');
+const members = process.env.Members
+    .split(',')
+    .map(m => {
+        let data = m.split(':');
+        return { name: data[0], id: data[1] }
+    });
+
+const job = schedule.scheduleJob('0 * * * *', function () {
+    sendMessages();
+});
+
+console.log("Started.")
+console.log(messages)
+console.log(members)
 
 function sendMessage(msg, webhookURL) {
     const hook = new Webhook(webhookURL);
     hook.send(msg)
 }
 
+function sendMemberMessage(member, message) {
+    sendMessage(getMention(member) + " " + message, webhook);
+    console.log(`Sent to ${member.name} message: "${message}"`)
+}
+
 function getMention(member) {
     return "<@" + member.id + ">"
 }
 
-let messages = [
-    "اعملوا documentation مشروع التخرج عشان مش عايز اسمع صياح.",
-]
-let members = [
-    {
-        name: "zula",
-        id: "234730025994158080"
-    },
-    {
-        name: "hady",
-        id: "385042714183467008"
-    },
-    {
-        name: "molto",
-        id: "380431504544628736"
-    },
-]
-
 let i = 0;
-function see7(){
+function sendMessages() {
     if (i == messages.length) i = 0;
     let message = messages[i];
     members.forEach(member => {
-        sendMessage(getMention(member) + " " + message, webhook)
+        sendMemberMessage(member, message);
     });
     i++
 }
-
-see7();
-
-const job = schedule.scheduleJob('0 * * * *', function(){
-    see7();
-  });
