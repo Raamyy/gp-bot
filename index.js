@@ -43,3 +43,5 @@ function sendMessages() {
     });
     i++
 }
+
+if(process.env.INSTA_TRY == "true") sendMessages();
